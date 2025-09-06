@@ -8,14 +8,9 @@ import pandas as pd
 from typing import Dict, Any
 
 def get_api_key() -> str:
-    key = (
-        st.secrets.get("GEMINI_API_KEY")
-        or os.getenv("GEMINI_API_KEY")
-        or st.secrets.get("GOOGLE_API_KEY")
-        or os.getenv("GOOGLE_API_KEY")
-        or ""
+    key = ( os.getenv("GEMINI_API_KEY")
     ).strip()
-    if key:  # keep any env-based code happy
+    if key: 
         os.environ["GEMINI_API_KEY"] = key
     return key
 
