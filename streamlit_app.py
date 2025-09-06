@@ -23,8 +23,6 @@ API_KEY = get_api_key()
 if not API_KEY:
     st.error("No API key found. Add GEMINI_API_KEY (or GOOGLE_API_KEY) to Streamlit secrets or env.")
     st.stop()
-
-# **Explicitly configure** (this is why your tiny snippet worked)
 genai.configure(api_key=API_KEY)
 # ----- CACHED HELPERS -----
 @st.cache_resource
@@ -95,7 +93,9 @@ with tab1:
 
 with tab2:
     st.subheader("Batch CSV")
-
+    st.markdown(
+    f"Use this if csv has small number of rows otherwise use CLI"
+                    )
     uploaded = st.file_uploader(
         "Upload CSV (first column: review text, second column (optional): actual sentiment label)",
         type=["csv"]
@@ -115,9 +115,7 @@ with tab2:
             if not os.getenv("GEMINI_API_KEY", "").strip():
                 st.error("Set `GEMINI_API_KEY` in your environment.")
             else:
-                df_out = run_batch_cached(df_in, mode_batch)  # cached, Streamlit-only
- # throttled here
-                # download
+                df_out = run_batch_cached(df_in, mode_batch) 
                 st.download_button(
                     "Download predictions.csv",
                     data=df_out.to_csv(index=False).encode("utf-8"),
