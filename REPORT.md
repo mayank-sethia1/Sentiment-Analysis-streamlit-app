@@ -1,4 +1,4 @@
-# Mini-Report (≤1 page)
+# Mini-Report
 
 ## Prompt design choices (with few-shot cues)
 - **Policy stack**: clear label rules for *Positive / Negative / Neutral* with edge handling — sarcasm → Negative; negation (“not bad” → weak Positive, “not great” → weak Negative); 4–5★ or 1–2★ steer Positive/Negative; 3★ defaults to Neutral unless text leans; off‑topic → Neutral.
@@ -29,7 +29,3 @@
 | Positive | **11**   | 0       | 0        |
 | Neutral  | 0        | **9**   | 0        |
 | Negative | 0        | 1       | **9**    |
-
-*Single error: one **Negative → Neutral**.*
-
-![Metrics screenshot](sandbox:/mnt/data/metrics.png)
