@@ -1,11 +1,31 @@
 from batch import run_batch,report
 import os
 import streamlit as st
+import google.generativeai as genai
 from annotated_text import annotated_text, annotation
 from sentiment_llm import MovieSentimentClassifier, segments_with_highlights
 import pandas as pd
 from typing import Dict, Any
 
+def get_api_key() -> str:
+    key = (
+        st.secrets.get("GEMINI_API_KEY")
+        or os.getenv("GEMINI_API_KEY")
+        or st.secrets.get("GOOGLE_API_KEY")
+        or os.getenv("GOOGLE_API_KEY")
+        or ""
+    ).strip()
+    if key:  # keep any env-based code happy
+        os.environ["GEMINI_API_KEY"] = key
+    return key
+
+API_KEY = get_api_key()
+if not API_KEY:
+    st.error("No API key found. Add GEMINI_API_KEY (or GOOGLE_API_KEY) to Streamlit secrets or env.")
+    st.stop()
+
+# **Explicitly configure** (this is why your tiny snippet worked)
+genai.configure(api_key=API_KEY)
 # ----- CACHED HELPERS -----
 @st.cache_resource
 def get_clf(mode: str):
