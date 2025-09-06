@@ -87,9 +87,9 @@ with tab1:
                     annotated_text(*segments_with_highlights(review, res["evidence_phrases"]))
 
 with tab2:
-    st.subheader("Batch CSV---")
+    st.subheader("Batch CSV")
     st.markdown(
-    f"Use this if csv has small number of rows otherwise use CLI"
+    f"Use this if csv has about 10 rows otherwise use CLI"
                     )
     uploaded = st.file_uploader(
         "Upload CSV (first column: review text, second column (optional): actual sentiment label)",
